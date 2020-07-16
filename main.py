@@ -12,9 +12,9 @@ def show_board():
 
 # Player inputs
 def inputs(current_player):
-    position = int(input("Field from 1 to 9: ")) - 1
-    if position not in range(0,9):
-        position = int(input("Invalid input. Field from 1 to 9: ")) - 1
+    position = int(input(f"{current_player}'s turn. Field from 1 to 9: ")) - 1
+    if position not in range(0, 9):
+        position = int(input(f"{current_player}'s invalid input. Field from 1 to 9: ")) - 1
     else:
         board[position] = current_player
 
@@ -33,11 +33,14 @@ def check_row(board):
     row_2 = (True if (board[3] == board[4] == board[5]) and (board[3] + board[4] + board[5]) != "---" else False)
     row_3 = (True if (board[6] == board[7] == board[8]) and (board[6] + board[7] + board[8]) != "---" else False)
     if row_1:
-        return print(board[0] + " has won by row.")
+        print(board[0] + " has won by row.")
+        return True
     elif row_2:
-        return print(board[3] + " has won by row.")
+        print(board[3] + " has won by row.")
+        return True
     elif row_3:
-        return print(board[6] + " has won by row.")
+        print(board[6] + " has won by row.")
+        return True
     else:
         return None
 
@@ -46,11 +49,14 @@ def check_column(board):
     column_2 = (True if (board[1] == board[4] == board[7]) and (board[1] + board[4] + board[7]) != "---" else False)
     column_3 = (True if (board[2] == board[5] == board[8]) and (board[2] + board[5] + board[8]) != "---" else False)
     if column_1:
-        return print(board[0] + " has won by column.")
+        print(board[0] + " has won by column.")
+        return True
     elif column_2:
-        return print(board[1] + " has won by column.")
+        print(board[1] + " has won by column.")
+        return True
     elif column_3:
-        return print(board[2] + " has won by column.")
+        print(board[2] + " has won by column.")
+        return True
     else:
         return None
 
@@ -59,30 +65,42 @@ def check_diagonals(board):
     diagonal_1 = (True if (board[0] == board[4] == board[8]) and (board[0] + board[4] + board[8]) != "---" else False)
     diagonal_2 = (True if (board[2] == board[4] == board[6]) and (board[2] + board[4] + board[6]) != "---" else False)
     if diagonal_1:
-        return print(board[0] + " has won by diagonal.")
+        print(board[0] + " has won by diagonal.")
+        return True
     elif diagonal_2:
-        return print(board[2] + " has won by diagonal.")
+        print(board[2] + " has won by diagonal.")
+        return True
     else:
         return None
 
 
 # Checking win conditions
 def win_check():
-    check_row(board)
-    check_column(board)
-    check_diagonals(board)
+    if check_row(board) or check_column(board) or check_diagonals(board):
+        return True
 
 
 # Playing game
 def start_game():
+    global board
     current_player = "X"
-    while True:
+    game_running = True
+    while game_running:
         show_board()
         inputs(current_player)
         current_player = switch(current_player)
-        if "-" not in board:
+        if win_check():
+            game_running = False
+            again = input("Do you want to play again? Y/N: ").lower()
+            if again == "y":
+                board = ["-"] * 9
+                start_game()
+            elif again == "n":
+                break
+        elif "-" not in board:
             print("Tie.")
             break
+
 
 
 start_game()
