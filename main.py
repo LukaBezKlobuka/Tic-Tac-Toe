@@ -13,7 +13,10 @@ def show_board():
 # Player inputs
 def inputs(current_player):
     position = int(input("Field from 1 to 9: ")) - 1
-    board[position] = current_player
+    if position not in range(0,9):
+        position = int(input("Invalid input. Field from 1 to 9: ")) - 1
+    else:
+        board[position] = current_player
 
 
 # Player switching from X to O
@@ -79,8 +82,6 @@ def start_game():
         current_player = switch(current_player)
         if "-" not in board:
             print("Tie.")
-            break
-        elif win_check():
             break
 
 
