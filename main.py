@@ -3,6 +3,7 @@ board = ["-","-","-",
          "-","-","-",
          "-","-","-",]
 
+
 def show_board():
     print(board[0] + "|" + board[1] + "|" + board[2])
     print(board[3] + "|" + board[4] + "|" + board[5])
@@ -29,53 +30,59 @@ def check_row(board):
     row_2 = (True if (board[3] == board[4] == board[5]) and (board[3] + board[4] + board[5]) != "---" else False)
     row_3 = (True if (board[6] == board[7] == board[8]) and (board[6] + board[7] + board[8]) != "---" else False)
     if row_1:
-        return board[0]
+        return print(board[0] + " has won by row.")
     elif row_2:
-        return board[3]
+        return print(board[3] + " has won by row.")
     elif row_3:
-        return board[6]
-    return
+        return print(board[6] + " has won by row.")
+    else:
+        return None
 
 def check_column(board):
     column_1 = (True if (board[0] == board[3] == board[6]) and (board[0] + board[3] + board[6]) != "---" else False)
     column_2 = (True if (board[1] == board[4] == board[7]) and (board[1] + board[4] + board[7]) != "---" else False)
     column_3 = (True if (board[2] == board[5] == board[8]) and (board[2] + board[5] + board[8]) != "---" else False)
     if column_1:
-        return board[0]
+        return print(board[0] + " has won by column.")
     elif column_2:
-        return board[1]
+        return print(board[1] + " has won by column.")
     elif column_3:
-        return board[2]
-    return
+        return print(board[2] + " has won by column.")
+    else:
+        return None
+
 
 def check_diagonals(board):
     diagonal_1 = (True if (board[0] == board[4] == board[8]) and (board[0] + board[4] + board[8]) != "---" else False)
     diagonal_2 = (True if (board[2] == board[4] == board[6]) and (board[2] + board[4] + board[6]) != "---" else False)
     if diagonal_1:
-        return board[0]
+        return print(board[0] + " has won by diagonal.")
     elif diagonal_2:
-        return board[2]
-    return
+        return print(board[2] + " has won by diagonal.")
+    else:
+        return None
+
 
 # Checking win conditions
 def win_check():
     check_row(board)
     check_column(board)
-    if check_diagonals(board):
-        return "Win by diagonal."
+    check_diagonals(board)
+
 
 # Playing game
 def start_game():
     current_player = "X"
-    #counter = 0
+    counter = 0
     while True:
         show_board()
         if "-" not in board:
+            print("Tie.")
             break
         win_check()
         inputs(current_player)
         current_player = switch(current_player)
-        #counter += 1
+        counter += 1
 
 
 start_game()
