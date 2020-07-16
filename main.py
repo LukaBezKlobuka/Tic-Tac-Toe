@@ -73,16 +73,15 @@ def win_check():
 # Playing game
 def start_game():
     current_player = "X"
-    counter = 0
     while True:
         show_board()
+        inputs(current_player)
+        current_player = switch(current_player)
         if "-" not in board:
             print("Tie.")
             break
-        win_check()
-        inputs(current_player)
-        current_player = switch(current_player)
-        counter += 1
+        elif win_check():
+            break
 
 
 start_game()
